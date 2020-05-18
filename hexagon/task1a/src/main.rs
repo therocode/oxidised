@@ -1,15 +1,16 @@
-use std::io;
-use std::io::Write;
+use std::fs::File;
+use std::io::{prelude::*, BufReader};
 
 fn main() {
-    let mut mass_str = String::new();
+    let file = File::open("modules.txt").unwrap();
+    let reader = BufReader::new(file);
     
-    print!("Enter mass of module: ");
-    io::stdout().flush().unwrap();
+    let mut fuel: f64 = 0.0;
 
-    io::stdin().read_line(&mut mass_str).unwrap(); 
-    let mass: f64 = mass_str.trim().parse().unwrap();
+    for line in reader.lines() {
+        let mass: f64 = line.unwrap().trim().parse().unwrap();
+        fuel += (mass/3.0).floor() - 2.0;
+    }
 
-    let fuel = (mass/3.0).floor() - 2.0;
     println!("Fuel required for launch: {}", fuel as i64);
 }
