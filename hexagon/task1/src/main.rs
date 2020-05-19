@@ -11,8 +11,7 @@ fn main() -> Result<(), Box<dyn error::Error>> {
     let (fuel, total_fuel) = {
         let mut sum = (0.0, 0.0);
         for line in reader.lines() {
-            let mass = line?.trim().parse::<f64>()?;
-            let fuel = fuel_required(mass);
+            let fuel = fuel_required(line?.trim().parse::<f64>()?);
             sum.0 += fuel;
             sum.1 += additional_fuel(fuel);
         }
