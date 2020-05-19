@@ -1,8 +1,10 @@
-use std::fs::File;
-use std::io::{prelude::*, BufReader};
-use anyhow;
+use std::{
+    fs::File,
+    io::{prelude::*, BufReader},
+    error
+};
 
-fn main() -> Result<(), anyhow::Error> {
+fn main() -> Result<(), Box<dyn error::Error>> {
     let file = File::open("modules.txt").unwrap();
     let reader = BufReader::new(file);
 
