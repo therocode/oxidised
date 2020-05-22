@@ -1,13 +1,17 @@
-use text_io::read;
+use std::fs::File;
+use std::io::{self, prelude::*, BufReader};
 
-fn main() {
+fn main() -> io::Result<()> {
+    let file = File::open("input.txt").expect("Error reading input from file");
+    let reader = BufReader::new(file);
+
     let mut fuel: u32 = 0;
-
-    let modules: u32 = read!();
-    for module in 0..modules {
-        let mass: u32 = read!();
+    for line in reader.lines() {
+        let mass = line?.parse::<u32>().unwrap();
         fuel += ((mass / 3) - 2);
     }
 
     println!("{}", fuel);
+
+    Ok(())
 }
